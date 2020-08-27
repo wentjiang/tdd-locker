@@ -6,6 +6,7 @@ import java.util.UUID;
 public class Locker {
 
     private int capacity;
+    private int currentCapacity = 0;
 
     public Locker(int capacity) {
         this.capacity = capacity;
@@ -20,6 +21,10 @@ public class Locker {
     }
 
     public Ticket storeBag(Bag bag) {
+        if (currentCapacity == capacity){
+            throw new CapacityFullException("the locker is full");
+        }
+        currentCapacity++;
         return new Ticket(UUID.randomUUID().toString());
     }
 }
