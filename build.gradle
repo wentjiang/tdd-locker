@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+}
+
+group 'com.wentjiang'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        mavenCentral()
+    }
+}
+
+repositories {
+    maven {
+        url 'http://maven.aliyun.com/nexus/content/groups/public/'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+ext.libs = [
+        junit4: [
+                'junit:junit:4.12',
+                'org.mockito:mockito-core:2.19.0'
+        ],
+        junit5: [
+                "org.junit.jupiter:junit-jupiter-api:${JUNIT5_API_VERSION}",
+                "org.junit.jupiter:junit-jupiter-engine:${JUNIT5_API_VERSION}",
+                "org.junit.vintage:junit-vintage-engine:${JUNIT5_API_VERSION}",
+                "org.junit.jupiter:junit-jupiter-params:${JUNIT5_API_VERSION}",
+                "org.junit.platform:junit-platform-launcher:${JUNIT5_PLATFORM_VERSION}",
+                "org.junit.platform:junit-platform-runner:${JUNIT5_PLATFORM_VERSION}",
+                'org.mockito:mockito-junit-jupiter:2.17.0'
+        ]
+]
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        afterSuite { desc, result ->
+            if (!desc.parent) {
+                def output = " Result: ${result.resultType} " +
+                        "(${result.testCount} Tests, " +
+                        "${result.successfulTestCount} Successes, " +
+                        "${result.failedTestCount} Failures, " +
+                        "${result.skippedTestCount} Skipped) "
+                println('\n' + ('-' * output.length()) + '\n' + output + '\n' + ('-' * output.length()))
+            }
+        }
+    }
+}
+
+dependencies {
+    testCompile libs.junit5
+    testCompile 'org.assertj:assertj-core:3.10.0'
+    testCompile 'org.hamcrest:hamcrest-core:2.1'
+}
