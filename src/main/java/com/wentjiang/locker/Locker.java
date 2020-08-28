@@ -20,7 +20,7 @@ public class Locker {
         System.out.println("hello world");
     }
 
-    public Ticket storeBag(Bag bag) {
+    public Ticket storeBag() {
         if (currentCapacity == capacity) {
             throw new CapacityFullException(CapacityFullException.ERROR_MESSAGE_CAPACITY_FULL);
         }

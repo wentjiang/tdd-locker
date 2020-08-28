@@ -26,8 +26,7 @@ public class LockerTest {
     //given 没满的locker,需要存的包  when 存包 then 生成小票
     @Test
     public void should_generate_ticket_WHEN_store_bag_GIVEN_locker_not_full_and_bag() {
-        Bag bag = new Bag("test name");
-        Ticket ticket = locker.storeBag(bag);
+        Ticket ticket = locker.storeBag();
         Assert.assertNotNull(ticket);
     }
 
@@ -35,19 +34,17 @@ public class LockerTest {
     @Test
     public void should_remind_locker_is_full_WHEN_store_bag_GIVEN_full_locker_and_bag() {
         for (int i = 0; i < DEFAULT_CAPACITY; i++) {
-            locker.storeBag(new Bag("test name " + (i + 1)));
+            locker.storeBag();
         }
-        Bag bag = new Bag("test name " + 11);
         CapacityFullException thrown =
-                Assertions.assertThrows(CapacityFullException.class, () -> locker.storeBag(bag));
+                Assertions.assertThrows(CapacityFullException.class, () -> locker.storeBag());
         Assertions.assertTrue(thrown.getMessage().contains(CapacityFullException.ERROR_MESSAGE_CAPACITY_FULL));
     }
 
     //given 已存了包的locker,未使用的正确的小票 when 取包 then 验证通过
     @Test
     public void should_verify_passed_WHEN_take_bag_GIVEN_correct_ticket() {
-        Bag bag = new Bag("test name " + 1);
-        Ticket ticket = locker.storeBag(bag);
+        Ticket ticket = locker.storeBag();
         boolean verifyResult = locker.takeOutBag(ticket);
         Assertions.assertTrue(verifyResult);
     }
@@ -64,8 +61,7 @@ public class LockerTest {
     //given locker,已经被验证过的小票 when 取包 then 验证失败,提示票无效
     @Test
     public void should_verify_not_passed_WHEN_take_bag_GIVEN_used_ticket(){
-        Bag bag = new Bag("test name " + 1);
-        Ticket ticket = locker.storeBag(bag);
+        Ticket ticket = locker.storeBag();
         boolean verifyResult = locker.takeOutBag(ticket);
         Assertions.assertTrue(true);
         TicketException thrown =
