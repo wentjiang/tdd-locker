@@ -1,10 +1,11 @@
 package com.wentjiang.locker;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static com.wentjiang.locker.TicketException.ERROR_MESSAGE_TICKET;
 
 public class LockerTest {
 
@@ -38,7 +39,7 @@ public class LockerTest {
         Bag bag = new Bag("test name " + 11);
         CapacityFullException thrown =
                 Assertions.assertThrows(CapacityFullException.class, () -> locker.storeBag(bag));
-        Assertions.assertTrue(thrown.getMessage().contains("the locker is full"));
+        Assertions.assertTrue(thrown.getMessage().contains(CapacityFullException.ERROR_MESSAGE_CAPACITY_FULL));
     }
 
     //given 已存了包的locker,未使用的正确的小票 when 取包 then 验证通过
@@ -56,7 +57,7 @@ public class LockerTest {
         Ticket badTicket = new Ticket("bad ticket");
         TicketException thrown =
                 Assertions.assertThrows(TicketException.class, () -> locker.takeOut(badTicket));
-        Assertions.assertTrue(thrown.getMessage().contains("ticket is bad"));
+        Assertions.assertTrue(thrown.getMessage().contains(ERROR_MESSAGE_TICKET));
     }
 
 }
