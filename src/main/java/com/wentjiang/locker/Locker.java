@@ -1,12 +1,15 @@
 package com.wentjiang.locker;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Locker {
 
     private int capacity;
     private int currentCapacity = 0;
+    private Map<String,Ticket> ticketMap = new HashMap<>();
 
     public Locker(int capacity) {
         this.capacity = capacity;
@@ -25,10 +28,16 @@ public class Locker {
             throw new CapacityFullException("the locker is full");
         }
         currentCapacity++;
-        return new Ticket(UUID.randomUUID().toString());
+        Ticket ticket = new Ticket(UUID.randomUUID().toString());
+        ticketMap.put(ticket.getId(),ticket);
+        return ticket;
     }
 
     public boolean takeOut(Ticket ticket) {
+        Ticket verifyTicket = ticketMap.get(ticket.getId());
+        if (verifyTicket == null){
+            throw new TicketException("ticket is bad");
+        }
         return true;
     }
 }
