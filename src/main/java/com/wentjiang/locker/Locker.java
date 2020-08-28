@@ -21,10 +21,14 @@ public class Locker {
     }
 
     public Ticket storeBag(Bag bag) {
-        if (currentCapacity == capacity){
+        if (currentCapacity == capacity) {
             throw new CapacityFullException("the locker is full");
         }
         currentCapacity++;
         return new Ticket(UUID.randomUUID().toString());
+    }
+
+    public boolean takeOut(Ticket ticket) {
+        return true;
     }
 }
