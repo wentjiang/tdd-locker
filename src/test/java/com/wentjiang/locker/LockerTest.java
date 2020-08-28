@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.wentjiang.locker.TicketException.ERROR_MESSAGE_TICKET;
+import static com.wentjiang.locker.TicketException.ERROR_MESSAGE_BAD_TICKET;
+import static com.wentjiang.locker.TicketException.ERROR_MESSAGE_USED_TICKET;
 
 public class LockerTest {
 
@@ -47,7 +48,7 @@ public class LockerTest {
     public void should_verify_passed_WHEN_take_bag_GIVEN_correct_ticket() {
         Bag bag = new Bag("test name " + 1);
         Ticket ticket = locker.storeBag(bag);
-        boolean verifyResult = locker.takeOut(ticket);
+        boolean verifyResult = locker.takeOutBag(ticket);
         Assertions.assertTrue(verifyResult);
     }
 
@@ -56,8 +57,20 @@ public class LockerTest {
     public void should_verify_not_passed_WHEN_take_bag_GIVEN_bad_ticket() {
         Ticket badTicket = new Ticket("bad ticket");
         TicketException thrown =
-                Assertions.assertThrows(TicketException.class, () -> locker.takeOut(badTicket));
-        Assertions.assertTrue(thrown.getMessage().contains(ERROR_MESSAGE_TICKET));
+                Assertions.assertThrows(TicketException.class, () -> locker.takeOutBag(badTicket));
+        Assertions.assertTrue(thrown.getMessage().contains(ERROR_MESSAGE_BAD_TICKET));
+    }
+
+    //given locker,已经被验证过的小票 when 取包 then 验证失败,提示票无效
+    @Test
+    public void should_verify_not_passed_WHEN_take_bag_GIVEN_used_ticket(){
+        Bag bag = new Bag("test name " + 1);
+        Ticket ticket = locker.storeBag(bag);
+        boolean verifyResult = locker.takeOutBag(ticket);
+        Assertions.assertTrue(true);
+        TicketException thrown =
+                Assertions.assertThrows(TicketException.class, () -> locker.takeOutBag(ticket));
+        Assertions.assertTrue(thrown.getMessage().contains(ERROR_MESSAGE_USED_TICKET));
     }
 
 }
