@@ -50,4 +50,15 @@ public class PrimaryLockerRobotTest {
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(lockers);
         Assertions.assertThrows(CapacityFullException.class, () -> primaryLockerRobot.storeBag(new Bag()));
     }
+
+    @Test
+    public void should_take_out_bag_currently_when_PrimaryLockerRobot_take_out_bag_given_valid_ticket(){
+        List<Locker> lockers = new ArrayList<>();
+        lockers.add(new Locker(DEFAULT_CAPACITY));
+        lockers.add(new Locker(DEFAULT_CAPACITY));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(lockers);
+        Ticket ticket = primaryLockerRobot.storeBag(new Bag());
+        Bag bag = primaryLockerRobot.takeOutBag(ticket);
+        Assertions.assertNotNull(bag);
+    }
 }

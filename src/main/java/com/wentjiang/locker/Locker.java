@@ -28,17 +28,16 @@ public class Locker {
         return ticket;
     }
 
-    public boolean takeOutBag(Ticket ticket) {
+    public Optional<Bag> takeOutBag(Ticket ticket) {
         if (usedTicketSet.contains(ticket)) {
             throw new TicketUsedException();
         }
         Bag bag = ticketMap.get(ticket);
-        if (bag == null) {
-            throw new BadTicketException();
+        if (bag != null) {
+            usedTicketSet.add(ticket);
+            ticketMap.remove(ticket);
         }
-        usedTicketSet.add(ticket);
-        ticketMap.remove(ticket);
-        return true;
+        return Optional.ofNullable(bag);
     }
 
     public boolean isFull() {
