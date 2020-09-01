@@ -1,45 +1,43 @@
 package com.wentjiang.locker;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import com.wentjiang.locker.exception.BadTicketException;
+import com.wentjiang.locker.exception.CapacityFullException;
+import com.wentjiang.locker.exception.TicketUsedException;
+
+import java.util.*;
 
 public class Locker {
 
-    private int capacity;
-    private int currentCapacity = 0;
-    private Map<String, Ticket> ticketMap = new HashMap<>();
-    private Map<String, Ticket> usedTicketMap = new HashMap<>();
+    private final int capacity;
+    private int usedCapacity = 0;
+    private final Map<Ticket, Bag> ticketMap = new HashMap<>();
+    private final Set<Ticket> usedTicketSet = new HashSet<>();
 
     public Locker(int capacity) {
         this.capacity = capacity;
     }
 
-    public static void main(String[] args) {
-        System.out.println("hello world");
-    }
-
-    public Ticket storeBag() {
-        if (currentCapacity == capacity) {
+    public Ticket storeBag(Bag bag) {
+        if (usedCapacity == capacity) {
             throw new CapacityFullException(CapacityFullException.ERROR_MESSAGE_CAPACITY_FULL);
         }
-        currentCapacity++;
+        usedCapacity++;
         Ticket ticket = new Ticket(UUID.randomUUID().toString());
-        ticketMap.put(ticket.getId(), ticket);
+        ticketMap.put(ticket, bag);
         return ticket;
     }
 
     public boolean takeOutBag(Ticket ticket) {
-        if (usedTicketMap.containsKey(ticket.getId())) {
-            throw new TicketException(TicketException.ERROR_MESSAGE_USED_TICKET);
+        if (usedTicketSet.contains(ticket)) {
+            throw new TicketUsedException();
         }
-        Ticket verifyTicket = ticketMap.get(ticket.getId());
-        if (verifyTicket == null) {
-            throw new TicketException(TicketException.ERROR_MESSAGE_BAD_TICKET);
+        Bag bag = ticketMap.get(ticket);
+        if (bag == null) {
+            throw new BadTicketException();
         }
-        usedTicketMap.put(verifyTicket.getId(), verifyTicket);
-        ticketMap.remove(verifyTicket.getId());
+        usedTicketSet.add(ticket);
+        ticketMap.remove(ticket);
         return true;
     }
 }

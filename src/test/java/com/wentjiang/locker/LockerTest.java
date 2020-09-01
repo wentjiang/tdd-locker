@@ -1,16 +1,16 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.BadTicketException;
+import com.wentjiang.locker.exception.CapacityFullException;
+import com.wentjiang.locker.exception.TicketUsedException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.wentjiang.locker.TicketException.ERROR_MESSAGE_BAD_TICKET;
-import static com.wentjiang.locker.TicketException.ERROR_MESSAGE_USED_TICKET;
-
 public class LockerTest {
 
-    private static int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 10;
     private Locker locker;
 
     @BeforeEach
@@ -19,54 +19,43 @@ public class LockerTest {
     }
 
     @Test
-    public void test() {
-        System.out.println("hello test");
-    }
-
-    //given 没满的locker,需要存的包  when 存包 then 生成小票
-    @Test
     public void should_generate_ticket_WHEN_store_bag_GIVEN_locker_not_full_and_bag() {
-        Ticket ticket = locker.storeBag();
+        Ticket ticket = locker.storeBag(new Bag());
         Assert.assertNotNull(ticket);
     }
 
-    //given 满了的locker,需要存的包  when 存包 then 不生成小票,提示储物柜已满
     @Test
     public void should_remind_locker_is_full_WHEN_store_bag_GIVEN_full_locker_and_bag() {
         for (int i = 0; i < DEFAULT_CAPACITY; i++) {
-            locker.storeBag();
+            locker.storeBag(new Bag());
         }
-        CapacityFullException thrown =
-                Assertions.assertThrows(CapacityFullException.class, () -> locker.storeBag());
-        Assertions.assertTrue(thrown.getMessage().contains(CapacityFullException.ERROR_MESSAGE_CAPACITY_FULL));
+        Assertions.assertThrows(CapacityFullException.class, () -> locker.storeBag(new Bag()));
     }
 
-    //given 已存了包的locker,未使用的正确的小票 when 取包 then 验证通过
     @Test
     public void should_verify_passed_WHEN_take_bag_GIVEN_correct_ticket() {
-        Ticket ticket = locker.storeBag();
+        Ticket ticket = locker.storeBag(new Bag());
         boolean verifyResult = locker.takeOutBag(ticket);
         Assertions.assertTrue(verifyResult);
     }
 
-    //given locker,错误的小票 when 取包 then 验证失败,提示票无效
     @Test
     public void should_verify_not_passed_WHEN_take_bag_GIVEN_bad_ticket() {
+
         Ticket badTicket = new Ticket("bad ticket");
-        TicketException thrown =
-                Assertions.assertThrows(TicketException.class, () -> locker.takeOutBag(badTicket));
-        Assertions.assertTrue(thrown.getMessage().contains(ERROR_MESSAGE_BAD_TICKET));
+
+        Assertions.assertThrows(BadTicketException.class, () -> locker.takeOutBag(badTicket));
     }
 
     //given locker,已经被验证过的小票 when 取包 then 验证失败,提示票无效
     @Test
-    public void should_verify_not_passed_WHEN_take_bag_GIVEN_used_ticket(){
-        Ticket ticket = locker.storeBag();
+    public void should_verify_not_passed_WHEN_take_bag_GIVEN_used_ticket() {
+        Ticket ticket = locker.storeBag(new Bag());
+
         boolean verifyResult = locker.takeOutBag(ticket);
-        Assertions.assertTrue(true);
-        TicketException thrown =
-                Assertions.assertThrows(TicketException.class, () -> locker.takeOutBag(ticket));
-        Assertions.assertTrue(thrown.getMessage().contains(ERROR_MESSAGE_USED_TICKET));
+
+        Assertions.assertTrue(verifyResult);
+        Assertions.assertThrows(TicketUsedException.class, () -> locker.takeOutBag(ticket));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.wentjiang.locker;
+package com.wentjiang.locker.exception;
 
 public class CapacityFullException extends RuntimeException {
 
