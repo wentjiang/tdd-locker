@@ -40,4 +40,8 @@ public class Locker {
         ticketMap.remove(ticket);
         return true;
     }
+
+    public boolean isFull() {
+        return usedCapacity == capacity;
+    }
 }
