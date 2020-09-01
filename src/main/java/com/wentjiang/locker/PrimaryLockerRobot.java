@@ -26,6 +26,11 @@ public class PrimaryLockerRobot {
             Optional<Bag> bagOptional = locker.takeOutBag(ticket);
             bagOptional.ifPresent(takeOutBag::set);
         });
-        return takeOutBag.get();
+        Bag bag = takeOutBag.get();
+        if (bag == null){
+            throw new BadTicketException();
+        }else {
+            return bag;
+        }
     }
 }

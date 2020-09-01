@@ -1,11 +1,13 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.BadTicketException;
 import com.wentjiang.locker.exception.CapacityFullException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class PrimaryLockerRobotTest {
 
@@ -52,7 +54,7 @@ public class PrimaryLockerRobotTest {
     }
 
     @Test
-    public void should_take_out_bag_currently_when_PrimaryLockerRobot_take_out_bag_given_valid_ticket(){
+    public void should_take_out_bag_currently_when_PrimaryLockerRobot_take_out_bag_given_valid_ticket() {
         List<Locker> lockers = new ArrayList<>();
         lockers.add(new Locker(DEFAULT_CAPACITY));
         lockers.add(new Locker(DEFAULT_CAPACITY));
@@ -60,5 +62,17 @@ public class PrimaryLockerRobotTest {
         Ticket ticket = primaryLockerRobot.storeBag(new Bag());
         Bag bag = primaryLockerRobot.takeOutBag(ticket);
         Assertions.assertNotNull(bag);
+    }
+
+    //- given PrimaryLockerRobot管理多个Locker，无效小票 when PrimaryLockerRobot取包 then 取包失败，Robot提示无效票据
+    @Test
+    public void should_remind_bad_ticket_when_PrimaryLockerRobot_take_out_bag_given_invalid_ticket() {
+        List<Locker> lockers = new ArrayList<>();
+        lockers.add(new Locker(DEFAULT_CAPACITY));
+        lockers.add(new Locker(DEFAULT_CAPACITY));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(lockers);
+        Ticket validTicket = primaryLockerRobot.storeBag(new Bag());
+        Ticket invalidTicket = new Ticket(UUID.randomUUID().toString());
+        Assertions.assertThrows(BadTicketException.class, () -> primaryLockerRobot.takeOutBag(invalidTicket));
     }
 }
