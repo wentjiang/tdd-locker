@@ -12,10 +12,10 @@ import java.util.UUID;
 public class PrimaryLockerRobotTest {
 
     private static final int DEFAULT_CAPACITY = 10;
-    private static Locker emptyLocker1;
-    private static Locker emptyLocker2;
-    private static Locker fullLocker1;
-    private static Locker fullLocker2;
+    private static final Locker emptyLocker1;
+    private static final Locker emptyLocker2;
+    private static final Locker fullLocker1;
+    private static final Locker fullLocker2;
 
     static {
         emptyLocker1 = new Locker(DEFAULT_CAPACITY);

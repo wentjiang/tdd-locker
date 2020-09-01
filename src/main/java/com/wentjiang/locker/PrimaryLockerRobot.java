@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class PrimaryLockerRobot {
 
-    private List<Locker> lockers;
+    private final List<Locker> lockers;
 
     public PrimaryLockerRobot(List<Locker> lockers) {
         this.lockers = lockers;
