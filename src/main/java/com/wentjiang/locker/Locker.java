@@ -20,7 +20,7 @@ public class Locker {
 
     public Ticket storeBag(Bag bag) {
         if (usedCapacity == capacity) {
-            throw new CapacityFullException(CapacityFullException.ERROR_MESSAGE_CAPACITY_FULL);
+            throw new CapacityFullException();
         }
         usedCapacity++;
         Ticket ticket = new Ticket(UUID.randomUUID().toString());

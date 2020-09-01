@@ -1,5 +1,7 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.CapacityFullException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +15,6 @@ public class PrimaryLockerRobot {
 
     public Ticket storeBag(Bag bag) {
         Optional<Locker> lockerOptional = lockers.stream().filter(locker -> !locker.isFull()).findFirst();
-        return lockerOptional.get().storeBag(bag);
+        return lockerOptional.orElseThrow(CapacityFullException::new).storeBag(bag);
     }
 }
