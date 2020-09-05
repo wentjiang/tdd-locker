@@ -1,11 +1,13 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.BadTicketException;
 import com.wentjiang.locker.exception.CapacityFullException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.UUID;
 
 public class SmartLockerRobotTest {
 
@@ -50,6 +52,15 @@ public class SmartLockerRobotTest {
         Ticket ticket = robot.storeBag(bag);
         Assertions.assertNotNull(ticket);
         Assertions.assertEquals(bag, robot.takeOutBag(ticket));
+    }
+
+    @Test
+    public void shoud_take_out_bag_fail_remind_invalid_ticket_when_take_out_bag_given_invalid_ticket() {
+        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker()));
+        Bag bag = new Bag();
+        Ticket validTicket = robot.storeBag(bag);
+        Ticket invalidTicket = new Ticket(UUID.randomUUID().toString());
+        Assertions.assertThrows(BadTicketException.class, () -> robot.takeOutBag(invalidTicket));
     }
 
 }
