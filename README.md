@@ -44,3 +44,13 @@ Note：
 
 - given PrimaryLockerRobot管理多个Locker，有效小票 when PrimaryLockerRobot取包 then PrimaryLockerRobot正确取回了包
 - given PrimaryLockerRobot管理多个Locker，无效小票 when PrimaryLockerRobot取包 then 取包失败，Robot提示无效票据
+
+# class 3
+
+# tasking 3
+- given SmartLockerRobot管理多个没有存满的Locker when SmartLockerRobot存包 then 存包成功,返回小票
+- given SmartLockerRobot管理多个没有存满的Locker,第二个locker的空余数量多于第一个locker的空余数量 when SmartLockerRobot存包 then 成功存包到第二个Locker,返回小票
+- given SmartLockerRobot管理多个存满的Locker when SmartLockerRobot存包 then 存包失败,提示储物柜已满
+
+- given SmartLockerRobot管理多个Locker,有效小票 when SmartLockerRobot取包 then SmartLockerRobot正确取回了包
+- given SmartLockerRobot管理多个Locker,无效小票 when SmartLockerRobot取包 then 取包失败,Robot提示无效票据

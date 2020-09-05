@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class PrimaryLockerRobotTest {
@@ -35,8 +36,12 @@ public class PrimaryLockerRobotTest {
         lockers.add(emptyLocker1);
         lockers.add(emptyLocker2);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(lockers);
-        Ticket ticket = primaryLockerRobot.storeBag(new Bag());
+        Bag bag = new Bag();
+        Ticket ticket = primaryLockerRobot.storeBag(bag);
         Assertions.assertNotNull(ticket);
+        Optional<Bag> bagOptional = emptyLocker1.takeOutBag(ticket);
+        Assertions.assertTrue(bagOptional.isPresent());
+        Assertions.assertEquals(bag, bagOptional.get());
     }
 
     @Test
@@ -45,8 +50,12 @@ public class PrimaryLockerRobotTest {
         lockers.add(fullLocker1);
         lockers.add(emptyLocker1);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(lockers);
-        Ticket ticket = primaryLockerRobot.storeBag(new Bag());
+        Bag bag = new Bag();
+        Ticket ticket = primaryLockerRobot.storeBag(bag);
         Assertions.assertNotNull(ticket);
+        Optional<Bag> bagOptional = emptyLocker1.takeOutBag(ticket);
+        Assertions.assertTrue(bagOptional.isPresent());
+        Assertions.assertEquals(bag, bagOptional.get());
     }
 
     @Test
@@ -64,9 +73,9 @@ public class PrimaryLockerRobotTest {
         lockers.add(emptyLocker1);
         lockers.add(emptyLocker2);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(lockers);
-        Ticket ticket = primaryLockerRobot.storeBag(new Bag());
-        Bag bag = primaryLockerRobot.takeOutBag(ticket);
-        Assertions.assertNotNull(bag);
+        Bag bag = new Bag();
+        Ticket ticket = primaryLockerRobot.storeBag(bag);
+        Assertions.assertEquals(bag, primaryLockerRobot.takeOutBag(ticket));
     }
 
     @Test
