@@ -55,7 +55,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void shoud_take_out_bag_fail_remind_invalid_ticket_when_take_out_bag_given_invalid_ticket() {
+    public void should_take_out_bag_fail_remind_invalid_ticket_when_take_out_bag_given_invalid_ticket() {
         SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker()));
         Bag bag = new Bag();
         Ticket validTicket = robot.storeBag(bag);
