@@ -11,10 +11,12 @@ public class SmartLockerRobotTest {
 
     @Test
     public void should_store_bag_success_when_store_bag_given_SmartLockerRobot_manager_two_not_full_locker_and_bag() {
-        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(LockerUtil.emptyLocker1, LockerUtil.emptyLocker2));
+        Locker emptyLocker1 = LockerUtil.getEmptyLocker();
+        Locker emptyLocker2 = LockerUtil.getEmptyLocker();
+        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(emptyLocker1, emptyLocker2));
         Bag bag = new Bag();
         Ticket ticket = robot.storeBag(bag);
-        Optional<Bag> bagOptional = LockerUtil.emptyLocker1.takeOutBag(ticket);
+        Optional<Bag> bagOptional = emptyLocker1.takeOutBag(ticket);
         Assertions.assertTrue(bagOptional.isPresent());
         Assertions.assertEquals(bag, bagOptional.get());
     }
@@ -35,7 +37,19 @@ public class SmartLockerRobotTest {
 
     @Test
     public void should_store_bag_fail_and_remind_lockers_is_full_when_store_bag_given_smartLockerRobot_manager_two_full_lockers() {
-        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(LockerUtil.fullLocker1, LockerUtil.fullLocker2));
+        Locker fullLocker1 = LockerUtil.getFullLocker();
+        Locker fullLocker2 = LockerUtil.getFullLocker();
+        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(fullLocker1, fullLocker2));
         Assertions.assertThrows(CapacityFullException.class, () -> robot.storeBag(new Bag()));
     }
+
+    @Test
+    public void should_take_out_bag_currently_when_take_out_bag_given_martLockerRobot_manager_two_lockers() {
+        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker()));
+        Bag bag = new Bag();
+        Ticket ticket = robot.storeBag(bag);
+        Assertions.assertNotNull(ticket);
+        Assertions.assertEquals(bag, robot.takeOutBag(ticket));
+    }
+
 }
