@@ -17,4 +17,15 @@ public class LockerUtil {
             fullLocker2.storeBag(new Bag());
         }
     }
+
+    public static Locker getStoredLocker(int storeNum, int capacity) {
+        if (storeNum > capacity) {
+            storeNum = capacity;
+        }
+        Locker locker = new Locker(capacity);
+        for (int i = 0; i < storeNum; i++) {
+            locker.storeBag(new Bag());
+        }
+        return locker;
+    }
 }

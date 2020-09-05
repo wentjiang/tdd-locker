@@ -43,4 +43,8 @@ public class Locker {
     public boolean isFull() {
         return usedCapacity == capacity;
     }
+
+    public int getFreeCapacity() {
+        return capacity - usedCapacity;
+    }
 }
