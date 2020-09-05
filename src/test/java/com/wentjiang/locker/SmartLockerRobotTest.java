@@ -1,5 +1,6 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.CapacityFullException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -32,4 +33,9 @@ public class SmartLockerRobotTest {
         Assertions.assertEquals(bag, bagOptional.get());
     }
 
+    @Test
+    public void should_store_bag_fail_and_remind_lockers_is_full_when_store_bag_given_smartLockerRobot_manager_two_full_lockers() {
+        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(LockerUtil.fullLocker1, LockerUtil.fullLocker2));
+        Assertions.assertThrows(CapacityFullException.class, () -> robot.storeBag(new Bag()));
+    }
 }
