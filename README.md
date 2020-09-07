@@ -47,9 +47,14 @@ Note：
 
 # class 3
 
+```
+需求：作为一个聪明的储物柜机器人，我能够将包存在可用容量最多的储物柜，并可以取出
+```
+
 # tasking 3
 - given SmartLockerRobot管理多个没有存满的Locker when SmartLockerRobot存包 then 存包成功,返回小票
-- given SmartLockerRobot管理多个没有存满的Locker,第二个locker的空余数量多于第一个locker的空余数量 when SmartLockerRobot存包 then 成功存包到第二个Locker,返回小票
+- given SmartLockerRobot管理两个没有存满的Locker,第二个locker的空余数量多于第一个locker的空余数量 when SmartLockerRobot存包 then 成功存包到第二个Locker,返回小票
+- given SmartLockerRobot管理两个没有存满的Locker,第一个和第二个locker的空余容量相同 when SmartLockerRobot存包 then 成功存包到第一个Locker,返回小票
 - given SmartLockerRobot管理多个存满的Locker when SmartLockerRobot存包 then 存包失败,提示储物柜已满
 
 - given SmartLockerRobot管理多个Locker,有效小票 when SmartLockerRobot取包 then SmartLockerRobot正确取回了包

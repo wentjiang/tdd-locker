@@ -10,7 +10,6 @@ import java.util.*;
 public class Locker {
 
     private final int capacity;
-    private int usedCapacity = 0;
     private final Map<Ticket, Bag> ticketMap = new HashMap<>();
     private final Set<Ticket> usedTicketSet = new HashSet<>();
 
@@ -19,10 +18,9 @@ public class Locker {
     }
 
     public Ticket storeBag(Bag bag) {
-        if (usedCapacity == capacity) {
+        if (ticketMap.size() == capacity) {
             throw new CapacityFullException();
         }
-        usedCapacity++;
         Ticket ticket = new Ticket(UUID.randomUUID().toString());
         ticketMap.put(ticket, bag);
         return ticket;
@@ -40,11 +38,7 @@ public class Locker {
         return Optional.ofNullable(bag);
     }
 
-    public boolean isFull() {
-        return usedCapacity == capacity;
-    }
-
     public int getFreeCapacity() {
-        return capacity - usedCapacity;
+        return capacity - ticketMap.size();
     }
 }

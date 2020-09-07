@@ -13,7 +13,7 @@ public class PrimaryLockerRobot extends LockerRobotBase {
 
     @Override
     public Ticket storeBag(Bag bag) {
-        Optional<Locker> lockerOptional = lockers.stream().filter(locker -> !locker.isFull()).findFirst();
+        Optional<Locker> lockerOptional = lockers.stream().filter(locker -> locker.getFreeCapacity() > 0).findFirst();
         return lockerOptional.orElseThrow(CapacityFullException::new).storeBag(bag);
     }
 }

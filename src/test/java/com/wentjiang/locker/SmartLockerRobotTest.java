@@ -18,9 +18,7 @@ public class SmartLockerRobotTest {
         SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(emptyLocker1, emptyLocker2));
         Bag bag = new Bag();
         Ticket ticket = robot.storeBag(bag);
-        Optional<Bag> bagOptional = emptyLocker1.takeOutBag(ticket);
-        Assertions.assertTrue(bagOptional.isPresent());
-        Assertions.assertEquals(bag, bagOptional.get());
+        Assertions.assertNotNull(ticket);
     }
 
     @Test
@@ -33,6 +31,20 @@ public class SmartLockerRobotTest {
         Bag bag = new Bag();
         Ticket ticket = robot.storeBag(bag);
         Optional<Bag> bagOptional = locker2.takeOutBag(ticket);
+        Assertions.assertTrue(bagOptional.isPresent());
+        Assertions.assertEquals(bag, bagOptional.get());
+    }
+
+    @Test
+    public void should_store_bag_in_first_when_store_bag_given_smartLockerRobot_manager_two_same_free_capacity_locker(){
+        int firstLockerStoreNum = 5;
+        int secondLockerStoreNum = 5;
+        Locker locker1 = LockerUtil.getStoredLocker(firstLockerStoreNum, LockerUtil.DEFAULT_CAPACITY);
+        Locker locker2 = LockerUtil.getStoredLocker(secondLockerStoreNum, LockerUtil.DEFAULT_CAPACITY);
+        SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
+        Bag bag = new Bag();
+        Ticket ticket = robot.storeBag(bag);
+        Optional<Bag> bagOptional = locker1.takeOutBag(ticket);
         Assertions.assertTrue(bagOptional.isPresent());
         Assertions.assertEquals(bag, bagOptional.get());
     }
