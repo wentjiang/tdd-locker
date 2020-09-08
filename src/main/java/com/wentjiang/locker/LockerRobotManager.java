@@ -1,6 +1,9 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.CapacityFullException;
+
 import java.util.List;
+import java.util.Optional;
 
 public class LockerRobotManager {
 
@@ -13,6 +16,7 @@ public class LockerRobotManager {
     }
 
     public Ticket storeBag(Bag bag) {
-        return lockers.stream().filter(locker -> locker.getFreeCapacity() > 0).findFirst().get().storeBag(bag);
+        Optional<Locker> optionalLocker = lockers.stream().filter(locker -> locker.getFreeCapacity() > 0).findFirst();
+        return optionalLocker.orElseThrow(CapacityFullException::new).storeBag(bag);
     }
 }
