@@ -16,10 +16,10 @@ public class LockerRobotManager {
     }
 
     public Ticket storeBag(Bag bag) {
-        Optional<Locker> optionalLocker = lockers.stream().filter(locker -> locker.getFreeCapacity() > 0).findFirst();
-        if (optionalLocker.isPresent()){
-            return optionalLocker.get().storeBag(bag);
+        Optional<LockerRobotBase> lockerRobotBaseOptional = robots.stream().filter(LockerRobotBase::isNotFull).findFirst();
+        if (lockerRobotBaseOptional.isPresent()) {
+            return lockerRobotBaseOptional.get().storeBag(bag);
         }
-        return robots.stream().filter(LockerRobotBase::isNotFull).findFirst().orElseThrow(CapacityFullException::new).storeBag(bag);
+        return lockers.stream().filter(locker -> locker.getFreeCapacity() > 0).findFirst().orElseThrow(CapacityFullException::new).storeBag(bag);
     }
 }

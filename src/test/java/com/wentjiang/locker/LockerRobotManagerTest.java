@@ -69,4 +69,15 @@ public class LockerRobotManagerTest {
         LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
         Assertions.assertThrows(CapacityFullException.class, () -> lockerRobotManager.storeBag(new Bag()));
     }
+
+    @Test
+    public void should_store_in_robot_when_locker_robot_manager_store_bag_given_not_full_robot_and_not_full_locker(){
+        List<Locker> lockers = Collections.singletonList(LockerUtil.getEmptyLocker());
+        List<LockerRobotBase> robots = Collections.singletonList(LockerUtil.getNotFullPrimaryLockerRobot());
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = lockerRobotManager.storeBag(bag);
+        Assertions.assertNotNull(ticket);
+        Assertions.assertEquals(bag, robots.get(0).takeOutBag(ticket));
+    }
 }
