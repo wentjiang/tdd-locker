@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 public class LockerTest {
 
     private static final int DEFAULT_CAPACITY = 10;
@@ -36,27 +34,22 @@ public class LockerTest {
 
     @Test
     public void should_verify_passed_WHEN_take_bag_GIVEN_correct_ticket() {
-        Ticket ticket = locker.storeBag(new Bag());
-        Optional<Bag> bagOptional = locker.takeOutBag(ticket);
-        Assertions.assertTrue(bagOptional.isPresent());
+        Bag bag = new Bag();
+        Ticket ticket = locker.storeBag(bag);
+        Assertions.assertEquals(bag, locker.takeOutBag(ticket));
     }
 
     @Test
     public void should_return_nothing_WHEN_take_bag_GIVEN_bad_ticket() {
-
         Ticket badTicket = new Ticket();
-
-        Assertions.assertFalse(locker.takeOutBag(badTicket).isPresent());
+        Assertions.assertThrows(BadTicketException.class, () -> locker.takeOutBag(badTicket));
     }
 
-    //given locker,已经被验证过的小票 when 取包 then 验证失败,提示票无效
     @Test
     public void should_verify_not_passed_WHEN_take_bag_GIVEN_used_ticket() {
-        Ticket ticket = locker.storeBag(new Bag());
-
-        Optional<Bag> bagOptional = locker.takeOutBag(ticket);
-
-        Assertions.assertTrue(bagOptional.isPresent());
+        Bag bag = new Bag();
+        Ticket ticket = locker.storeBag(bag);
+        Assertions.assertEquals(bag, locker.takeOutBag(ticket));
         Assertions.assertThrows(TicketUsedException.class, () -> locker.takeOutBag(ticket));
     }
 

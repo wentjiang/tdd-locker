@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public abstract class LockerRobotBase {
+public abstract class LockerRobotBase implements BagOperate {
 
     protected final List<Locker> lockers;
 
@@ -14,20 +14,18 @@ public abstract class LockerRobotBase {
         this.lockers = lockers;
     }
 
+    @Override
     public abstract Ticket storeBag(Bag bag);
 
+    @Override
     public Bag takeOutBag(Ticket ticket) {
-        AtomicReference<Bag> takeOutBag = new AtomicReference<>();
-        lockers.forEach(locker -> {
-            Optional<Bag> bagOptional = locker.takeOutBag(ticket);
-            bagOptional.ifPresent(takeOutBag::set);
-        });
-        Bag bag = takeOutBag.get();
-        if (bag == null) {
-            throw new BadTicketException();
-        } else {
-            return bag;
+        for (Locker locker : lockers) {
+            try {
+                return locker.takeOutBag(ticket);
+            } catch (BadTicketException ignored) {
+            }
         }
+        throw new BadTicketException();
     }
 
     public boolean isNotFull() {

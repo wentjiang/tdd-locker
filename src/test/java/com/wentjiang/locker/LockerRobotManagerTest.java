@@ -19,7 +19,7 @@ public class LockerRobotManagerTest {
         Bag bag = new Bag();
         Ticket ticket = lockerRobotManager.storeBag(bag);
         Assertions.assertNotNull(ticket);
-        Assertions.assertEquals(bag, lockers.get(0).takeOutBag(ticket).get());
+        Assertions.assertEquals(bag, lockers.get(0).takeOutBag(ticket));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class LockerRobotManagerTest {
         Bag bag = new Bag();
         Ticket ticket = lockerRobotManager.storeBag(bag);
         Assertions.assertNotNull(ticket);
-        Assertions.assertEquals(bag, lockers.get(1).takeOutBag(ticket).get());
+        Assertions.assertEquals(bag, lockers.get(1).takeOutBag(ticket));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class LockerRobotManagerTest {
         Bag bag = new Bag();
         Ticket ticket = lockerRobotManager.storeBag(bag);
         Assertions.assertNotNull(ticket);
-        Assertions.assertEquals(bag, lockers.get(0).takeOutBag(ticket).get());
+        Assertions.assertEquals(bag, lockers.get(0).takeOutBag(ticket));
     }
 
     @Test

@@ -30,9 +30,7 @@ public class SmartLockerRobotTest {
         SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
         Bag bag = new Bag();
         Ticket ticket = robot.storeBag(bag);
-        Optional<Bag> bagOptional = locker2.takeOutBag(ticket);
-        Assertions.assertTrue(bagOptional.isPresent());
-        Assertions.assertEquals(bag, bagOptional.get());
+        Assertions.assertEquals(bag, locker2.takeOutBag(ticket));
     }
 
     @Test
@@ -44,9 +42,7 @@ public class SmartLockerRobotTest {
         SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
         Bag bag = new Bag();
         Ticket ticket = robot.storeBag(bag);
-        Optional<Bag> bagOptional = locker1.takeOutBag(ticket);
-        Assertions.assertTrue(bagOptional.isPresent());
-        Assertions.assertEquals(bag, bagOptional.get());
+        Assertions.assertEquals(bag, locker1.takeOutBag(ticket));
     }
 
     @Test

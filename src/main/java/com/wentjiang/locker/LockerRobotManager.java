@@ -6,7 +6,7 @@ import com.wentjiang.locker.exception.CapacityFullException;
 import java.util.List;
 import java.util.Optional;
 
-public class LockerRobotManager {
+public class LockerRobotManager implements BagOperate {
 
     private final List<Locker> lockers;
     private final List<LockerRobotBase> robots;
@@ -16,6 +16,7 @@ public class LockerRobotManager {
         this.robots = robots;
     }
 
+    @Override
     public Ticket storeBag(Bag bag) {
         Optional<LockerRobotBase> lockerRobotBaseOptional = robots.stream().filter(LockerRobotBase::isNotFull).findFirst();
         if (lockerRobotBaseOptional.isPresent()) {
@@ -24,6 +25,7 @@ public class LockerRobotManager {
         return lockers.stream().filter(locker -> locker.getFreeCapacity() > 0).findFirst().orElseThrow(CapacityFullException::new).storeBag(bag);
     }
 
+    @Override
     public Bag takeOutBag(Ticket ticket) {
         for (LockerRobotBase robot : robots) {
             try {
@@ -32,9 +34,9 @@ public class LockerRobotManager {
             }
         }
         for (Locker locker : lockers) {
-            Optional<Bag> bagOptional = locker.takeOutBag(ticket);
-            if (bagOptional.isPresent()) {
-                return bagOptional.get();
+            try {
+                return locker.takeOutBag(ticket);
+            } catch (BadTicketException ignored) {
             }
         }
         throw new BadTicketException();

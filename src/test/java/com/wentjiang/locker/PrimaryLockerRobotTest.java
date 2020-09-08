@@ -27,9 +27,7 @@ public class PrimaryLockerRobotTest {
         Bag bag = new Bag();
         Ticket ticket = primaryLockerRobot.storeBag(bag);
         Assertions.assertNotNull(ticket);
-        Optional<Bag> bagOptional = emptyLocker1.takeOutBag(ticket);
-        Assertions.assertTrue(bagOptional.isPresent());
-        Assertions.assertEquals(bag, bagOptional.get());
+        Assertions.assertEquals(bag, emptyLocker1.takeOutBag(ticket));
     }
 
     @Test
