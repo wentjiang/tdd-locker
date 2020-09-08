@@ -21,7 +21,7 @@ public class Locker {
         if (ticketMap.size() == capacity) {
             throw new CapacityFullException();
         }
-        Ticket ticket = new Ticket(UUID.randomUUID().toString());
+        Ticket ticket = new Ticket();
         ticketMap.put(ticket, bag);
         return ticket;
     }

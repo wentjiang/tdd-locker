@@ -36,7 +36,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void should_store_bag_in_first_when_store_bag_given_smartLockerRobot_manager_two_same_free_capacity_locker(){
+    public void should_store_bag_in_first_when_store_bag_given_smartLockerRobot_manager_two_same_free_capacity_locker() {
         int firstLockerStoreNum = 5;
         int secondLockerStoreNum = 5;
         Locker locker1 = LockerUtil.getStoredLocker(firstLockerStoreNum, LockerUtil.DEFAULT_CAPACITY);
@@ -71,7 +71,7 @@ public class SmartLockerRobotTest {
         SmartLockerRobot robot = new SmartLockerRobot(Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker()));
         Bag bag = new Bag();
         Ticket validTicket = robot.storeBag(bag);
-        Ticket invalidTicket = new Ticket(UUID.randomUUID().toString());
+        Ticket invalidTicket = new Ticket();
         Assertions.assertThrows(BadTicketException.class, () -> robot.takeOutBag(invalidTicket));
     }
 

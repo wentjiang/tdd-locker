@@ -1,5 +1,6 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.BadTicketException;
 import com.wentjiang.locker.exception.CapacityFullException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -101,11 +102,20 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_take_out_successfully_when_manager_take_out_bag_given_manager_two_lockers_and_no_robot() {
+    public void should_take_out_successfully_when_manager_take_out_bag_given_manager_two_lockers_and_no_robot_and_valid_ticket() {
         List<Locker> lockers = Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker());
         LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, Collections.emptyList());
         Bag bag = new Bag();
         Ticket ticket = lockerRobotManager.storeBag(bag);
         Assertions.assertEquals(bag, lockerRobotManager.takeOutBag(ticket));
+    }
+
+    @Test
+    public void should_take_out_successfully_when_manager_take_out_bag_given_manager_two_lockers_and_no_robot_and_invalid_ticket() {
+        List<Locker> lockers = Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker());
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, Collections.emptyList());
+        Bag bag = new Bag();
+        Ticket ticket = lockerRobotManager.storeBag(bag);
+        Assertions.assertThrows(BadTicketException.class, () -> lockerRobotManager.takeOutBag(new Ticket()));
     }
 }

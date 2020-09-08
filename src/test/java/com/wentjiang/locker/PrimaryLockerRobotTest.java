@@ -56,7 +56,7 @@ public class PrimaryLockerRobotTest {
         Locker emptyLocker2 = LockerUtil.getEmptyLocker();
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(emptyLocker1, emptyLocker2));
         Ticket validTicket = primaryLockerRobot.storeBag(new Bag());
-        Ticket invalidTicket = new Ticket(UUID.randomUUID().toString());
+        Ticket invalidTicket = new Ticket();
         Assertions.assertThrows(BadTicketException.class, () -> primaryLockerRobot.takeOutBag(invalidTicket));
     }
 }

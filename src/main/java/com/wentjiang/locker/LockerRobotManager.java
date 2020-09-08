@@ -1,5 +1,6 @@
 package com.wentjiang.locker;
 
+import com.wentjiang.locker.exception.BadTicketException;
 import com.wentjiang.locker.exception.CapacityFullException;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class LockerRobotManager {
         for (LockerRobotBase robot : robots) {
             try {
                 return robot.takeOutBag(ticket);
-            } catch (CapacityFullException ignored) {
+            } catch (BadTicketException ignored) {
             }
         }
         for (Locker locker : lockers) {
@@ -36,6 +37,6 @@ public class LockerRobotManager {
                 return bagOptional.get();
             }
         }
-        throw new CapacityFullException();
+        throw new BadTicketException();
     }
 }

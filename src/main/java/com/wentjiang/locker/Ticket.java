@@ -1,13 +1,14 @@
 package com.wentjiang.locker;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Ticket {
 
-    private String id;
+    private final String id;
 
-    public Ticket(String id) {
-        this.id = id;
+    public Ticket() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {

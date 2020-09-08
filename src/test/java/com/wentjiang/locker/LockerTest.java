@@ -44,7 +44,7 @@ public class LockerTest {
     @Test
     public void should_return_nothing_WHEN_take_bag_GIVEN_bad_ticket() {
 
-        Ticket badTicket = new Ticket("bad ticket");
+        Ticket badTicket = new Ticket();
 
         Assertions.assertFalse(locker.takeOutBag(badTicket).isPresent());
     }
