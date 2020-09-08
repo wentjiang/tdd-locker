@@ -111,11 +111,20 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_take_out_successfully_when_manager_take_out_bag_given_manager_two_lockers_and_no_robot_and_invalid_ticket() {
+    public void should_take_out_fail_when_manager_take_out_bag_given_manager_two_lockers_and_no_robot_and_invalid_ticket() {
         List<Locker> lockers = Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker());
         LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, Collections.emptyList());
         Bag bag = new Bag();
         Ticket ticket = lockerRobotManager.storeBag(bag);
         Assertions.assertThrows(BadTicketException.class, () -> lockerRobotManager.takeOutBag(new Ticket()));
+    }
+
+    @Test
+    public void should_take_out_successfully_when_manager_take_out_bag_given_manager_no_locker_and_two_robots_and_valid_ticket() {
+        List<LockerRobotBase> robots = Arrays.asList(LockerUtil.getNotFullPrimaryLockerRobot(), LockerUtil.getNotFullPrimaryLockerRobot());
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.emptyList(), robots);
+        Bag bag = new Bag();
+        Ticket ticket = lockerRobotManager.storeBag(bag);
+        Assertions.assertEquals(bag, lockerRobotManager.takeOutBag(ticket));
     }
 }
