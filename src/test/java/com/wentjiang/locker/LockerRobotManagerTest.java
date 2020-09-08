@@ -50,4 +50,15 @@ public class LockerRobotManagerTest {
         Assertions.assertNotNull(ticket);
         Assertions.assertEquals(bag, robots.get(0).takeOutBag(ticket));
     }
+
+    @Test
+    public void should_store_in_second_robot_when_locker_robot_manager_store_bag_given_first_full_robot_second_not_full_robot_and_no_lockers() {
+        List<Locker> lockers = Collections.emptyList();
+        List<LockerRobotBase> robots = Arrays.asList(LockerUtil.getFullPrimaryLockerRobot(), LockerUtil.getNotFullPrimaryLockerRobot());
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = lockerRobotManager.storeBag(bag);
+        Assertions.assertNotNull(ticket);
+        Assertions.assertEquals(bag, robots.get(1).takeOutBag(ticket));
+    }
 }
