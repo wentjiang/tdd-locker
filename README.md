@@ -59,3 +59,32 @@ Note：
 
 - given SmartLockerRobot管理多个Locker,有效小票 when SmartLockerRobot取包 then SmartLockerRobot正确取回了包
 - given SmartLockerRobot管理多个Locker,无效小票 when SmartLockerRobot取包 then 取包失败,Robot提示无效票据
+
+
+# class 4
+
+```
+需求：作为储物柜机器人的经理，我要管理多个机器人，我可以让机器人存包，也可以自己存包
+需求澄清：
+1. LockerRobotManager至少管理一个Robot或者Locker
+2. LockerRobotManager会让Robot先存包，然后再自己存包
+3. LockerRobotManager管理的Robot/Locker按顺序存包
+```
+
+# tasking 4
+- given manager管理两个有容量的locker,没有管理robot when manager存包 then 成功存入第一个locker,返回小票
+- given manager管理两个locker,第一个locker已满,第二个locker有空间,没有管理robot when manager存包 then 成功存入第二个locker,返回小票
+- given manager管理两个已满的locker,没有管理robot when manager存包 then 存包失败,提示储物柜已满
+- given manager没有管理locker,管理两个有空间的Robot when manager存包 then 成功存入第一个robot,返回小票
+- given manager没有管理locker,管理一个已经满了的Robot和一个有空间的robot when manager存包 then 成功存入第二个robot,返回小票
+- given manager没有管理locker,管理两个已经满了的Robot when manager存包 then 存包失败,提示储物柜已满
+- given manager管理1个locker和一个robot,都有可用空间 when manager存包 then 包存入robot,返回小票
+- given manager管理1个locker和一个robot,locker有可用空间,robot已满 when manager存包 then 包存入locker,返回小票
+- given manager管理1个locker和一个robot,locker和robot均已满 when manager存包 then 存包失败,提示储物柜已满
+
+- given manager管理两个locker,没有管理robot,票据有效 when manager取包 then 取包成功
+- given manager管理两个locker,没有管理robot,票据无效 when manager取包 then 取包失败,提示无效票据
+- given manager没有管理locker,管理了两个robot,票据有效 when manager取包 then 取包成功
+- given manager没有管理locker,管理了两个robot,票据无效 when manager取包 then 取包失败,提示无效票据
+- given manager管理了一个locker和一个robot,票据有效 when manager取包 then 取包成功
+- given manager管理了一个locker和一个robot,票据无效 when manager取包 then 取包失败,提示无效票据
