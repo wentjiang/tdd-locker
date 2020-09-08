@@ -22,4 +22,20 @@ public class LockerRobotManager {
         }
         return lockers.stream().filter(locker -> locker.getFreeCapacity() > 0).findFirst().orElseThrow(CapacityFullException::new).storeBag(bag);
     }
+
+    public Bag takeOutBag(Ticket ticket) {
+        for (LockerRobotBase robot : robots) {
+            try {
+                return robot.takeOutBag(ticket);
+            } catch (CapacityFullException ignored) {
+            }
+        }
+        for (Locker locker : lockers) {
+            Optional<Bag> bagOptional = locker.takeOutBag(ticket);
+            if (bagOptional.isPresent()) {
+                return bagOptional.get();
+            }
+        }
+        throw new CapacityFullException();
+    }
 }

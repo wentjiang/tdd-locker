@@ -71,7 +71,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_store_in_robot_when_locker_robot_manager_store_bag_given_not_full_robot_and_not_full_locker(){
+    public void should_store_in_robot_when_locker_robot_manager_store_bag_given_not_full_robot_and_not_full_locker() {
         List<Locker> lockers = Collections.singletonList(LockerUtil.getEmptyLocker());
         List<LockerRobotBase> robots = Collections.singletonList(LockerUtil.getNotFullPrimaryLockerRobot());
         LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
@@ -82,7 +82,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_store_in_robot_when_locker_robot_manager_store_bag_given_full_robot_and_not_full_locker(){
+    public void should_store_in_robot_when_locker_robot_manager_store_bag_given_full_robot_and_not_full_locker() {
         List<Locker> lockers = Collections.singletonList(LockerUtil.getEmptyLocker());
         List<LockerRobotBase> robots = Collections.singletonList(LockerUtil.getFullPrimaryLockerRobot());
         LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
@@ -93,10 +93,19 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_store_in_robot_when_locker_robot_manager_store_bag_given_full_robot_and_full_locker(){
+    public void should_store_in_robot_when_locker_robot_manager_store_bag_given_full_robot_and_full_locker() {
         List<Locker> lockers = Collections.singletonList(LockerUtil.getFullLocker());
         List<LockerRobotBase> robots = Collections.singletonList(LockerUtil.getFullPrimaryLockerRobot());
         LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
         Assertions.assertThrows(CapacityFullException.class, () -> lockerRobotManager.storeBag(new Bag()));
+    }
+
+    @Test
+    public void should_take_out_successfully_when_manager_take_out_bag_given_manager_two_lockers_and_no_robot() {
+        List<Locker> lockers = Arrays.asList(LockerUtil.getEmptyLocker(), LockerUtil.getEmptyLocker());
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, Collections.emptyList());
+        Bag bag = new Bag();
+        Ticket ticket = lockerRobotManager.storeBag(bag);
+        Assertions.assertEquals(bag, lockerRobotManager.takeOutBag(ticket));
     }
 }
