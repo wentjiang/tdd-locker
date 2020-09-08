@@ -23,10 +23,14 @@ public abstract class LockerRobotBase {
             bagOptional.ifPresent(takeOutBag::set);
         });
         Bag bag = takeOutBag.get();
-        if (bag == null){
+        if (bag == null) {
             throw new BadTicketException();
-        }else {
+        } else {
             return bag;
         }
+    }
+
+    public boolean isNotFull() {
+        return lockers.stream().anyMatch(locker -> locker.getFreeCapacity() > 0);
     }
 }

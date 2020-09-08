@@ -33,11 +33,21 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_store_fail_when_locker_robot_manager_store_bag_given_two_full_lockers_and_no_robot(){
+    public void should_store_fail_when_locker_robot_manager_store_bag_given_two_full_lockers_and_no_robot() {
         List<Locker> lockers = Arrays.asList(LockerUtil.getFullLocker(), LockerUtil.getFullLocker());
         List<LockerRobotBase> robots = Collections.emptyList();
         LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
         Assertions.assertThrows(CapacityFullException.class, () -> lockerRobotManager.storeBag(new Bag()));
     }
 
+    @Test
+    public void should_store_in_first_robot_when_locker_robot_manager_store_bag_given_two_not_full_robot_and_no_lockers() {
+        List<Locker> lockers = Collections.emptyList();
+        List<LockerRobotBase> robots = Arrays.asList(LockerUtil.getNotFullPrimaryLockerRobot(), LockerUtil.getNotFullPrimaryLockerRobot());
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(lockers, robots);
+        Bag bag = new Bag();
+        Ticket ticket = lockerRobotManager.storeBag(bag);
+        Assertions.assertNotNull(ticket);
+        Assertions.assertEquals(bag, robots.get(0).takeOutBag(ticket));
+    }
 }
