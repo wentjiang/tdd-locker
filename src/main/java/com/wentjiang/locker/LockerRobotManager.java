@@ -4,8 +4,8 @@ import java.util.List;
 
 public class LockerRobotManager {
 
-    private List<Locker> lockers;
-    private List<LockerRobotBase> robots;
+    private final List<Locker> lockers;
+    private final List<LockerRobotBase> robots;
 
     public LockerRobotManager(List<Locker> lockers, List<LockerRobotBase> robots) {
         this.lockers = lockers;
