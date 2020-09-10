@@ -7,7 +7,7 @@ import com.wentjiang.locker.exception.TicketUsedException;
 
 import java.util.*;
 
-public class Locker implements BagOperate{
+public class Locker implements BagOperate {
 
     private final int capacity;
     private final Map<Ticket, Bag> ticketMap = new HashMap<>();
@@ -28,6 +28,11 @@ public class Locker implements BagOperate{
     }
 
     @Override
+    public boolean isNotFull() {
+        return capacity > ticketMap.size();
+    }
+
+    @Override
     public Bag takeOutBag(Ticket ticket) {
         if (usedTicketSet.contains(ticket)) {
             throw new TicketUsedException();
@@ -37,11 +42,12 @@ public class Locker implements BagOperate{
             usedTicketSet.add(ticket);
             ticketMap.remove(ticket);
             return bag;
-        }else {
+        } else {
             throw new BadTicketException();
         }
     }
 
+    @Override
     public int getFreeCapacity() {
         return capacity - ticketMap.size();
     }

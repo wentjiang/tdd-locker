@@ -1,17 +1,17 @@
 package com.wentjiang.locker;
 
 import com.wentjiang.locker.exception.BadTicketException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class LockerRobotBase implements BagOperate {
 
-    protected final List<Locker> lockers;
+    protected final List<BagOperate> bagOperates = new ArrayList<>();
 
     public LockerRobotBase(List<Locker> lockers) {
-        this.lockers = lockers;
+        this.bagOperates.addAll(lockers);
     }
 
     @Override
@@ -19,16 +19,22 @@ public abstract class LockerRobotBase implements BagOperate {
 
     @Override
     public Bag takeOutBag(Ticket ticket) {
-        for (Locker locker : lockers) {
+        for (BagOperate bagOperate : bagOperates) {
             try {
-                return locker.takeOutBag(ticket);
+                return bagOperate.takeOutBag(ticket);
             } catch (BadTicketException ignored) {
             }
         }
         throw new BadTicketException();
     }
 
+    @Override
     public boolean isNotFull() {
-        return lockers.stream().anyMatch(locker -> locker.getFreeCapacity() > 0);
+        return bagOperates.stream().anyMatch(BagOperate::isNotFull);
+    }
+
+    @Override
+    public int getFreeCapacity() {
+        throw new NotImplementedException();
     }
 }

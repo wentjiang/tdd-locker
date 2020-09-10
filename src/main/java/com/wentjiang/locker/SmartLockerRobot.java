@@ -13,7 +13,7 @@ public class SmartLockerRobot extends LockerRobotBase {
 
     @Override
     public Ticket storeBag(Bag bag) {
-        Optional<Locker> lockerOptional = lockers.stream().max(Comparator.comparingInt(Locker::getFreeCapacity));
+        Optional<BagOperate> lockerOptional = bagOperates.stream().max(Comparator.comparingInt(BagOperate::getFreeCapacity));
         return lockerOptional.orElseThrow(CapacityFullException::new).storeBag(bag);
     }
 }

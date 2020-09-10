@@ -88,3 +88,14 @@ Note：
 - given manager没有管理locker,管理了两个robot,票据无效 when manager取包 then 取包失败,提示无效票据
 - given manager管理了一个locker和一个robot,票据有效 when manager取包 then 取包成功
 - given manager管理了一个locker和一个robot,票据无效 when manager取包 then 取包失败,提示无效票据
+
+# class 5
+
+```
+需求：作为储物柜机器人主管(Locker Robot Director)，我希望看到一张报表，能够反映出我管理的储物柜的存取包情况
+需求澄清：
+1. 报表中不区分PrimaryLockerRobot和SmartLockerRobot，两者都是Robot
+2. 系统中一定存在LockerRobotManager
+3. 可以存在多个LockerRobotManager
+4. 不被Manager管理的Robot/Locker不计入报表
+```
