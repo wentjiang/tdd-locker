@@ -1,4 +1,4 @@
-# 
+# thoughtworks TDD 培训示例
 
 # class 1
 ```
@@ -99,3 +99,39 @@ Note：
 3. 可以存在多个LockerRobotManager
 4. 不被Manager管理的Robot/Locker不计入报表
 ```
+
+# tasking 5
+
+- given director管理1个manager,manager只管理2个locker,两个locker的可用容量和容量分别为 2,10 和 4,10 when 统计报表 then 报表内容为
+```
+M 6 20
+  L 2 10
+  L 4 10
+```
+
+- given director管理1个manager,manager管理1个locker,可用容量和容量为 2,10,管理一个robot,robot管理一个locker,
+该locker的可用容量和容量为4,10 , when 统计报表 then 报表内容为
+```
+M 6 20
+  L 2 10
+  R 4 10
+    L 4 10
+```
+- given director管理1个manager,manager只管理2个robot,第一个robot管理两个locker,可用容量和容量都为2,10, 
+第二个robot管理两个locker,可用容量和容量都为4,10 when 统计报表 then 报表内容为
+```
+M 12 40
+  R 4 20
+    L 2 10
+    L 2 10
+  R 8 20
+    L 4 10
+    L 4 10
+```
+- given director只管理2个locker,可用容量和容量分别为2,10 和 4,10 存在一个不被director管理的locker,容量和可用容量为3,10 存在一个不被director管理的
+ robot,robot管理了一个locker,可用容量和容量为5,10 when 统计报表 then 报表内容为
+```
+M 6 20
+  L 2 10
+  L 4 10
+```  

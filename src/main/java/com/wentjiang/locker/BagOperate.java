@@ -9,4 +9,8 @@ public interface BagOperate {
     boolean isNotFull();
 
     int getFreeCapacity();
+
+    int getCapacity();
+
+    String statisticalForm(int layer);
 }

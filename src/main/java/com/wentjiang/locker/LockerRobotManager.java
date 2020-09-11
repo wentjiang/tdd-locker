@@ -30,7 +30,12 @@ public class LockerRobotManager implements BagOperate {
 
     @Override
     public int getFreeCapacity() {
-        throw new NotImplementedException();
+        return bagOperates.stream().mapToInt(BagOperate::getFreeCapacity).sum();
+    }
+
+    @Override
+    public int getCapacity() {
+        return bagOperates.stream().mapToInt(BagOperate::getCapacity).sum();
     }
 
     @Override
@@ -42,5 +47,20 @@ public class LockerRobotManager implements BagOperate {
             }
         }
         throw new BadTicketException();
+    }
+
+    @Override
+    public String statisticalForm(int layer) {
+        int freeCapacity = this.getFreeCapacity();
+        int capacity = this.getCapacity();
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < layer; i++) {
+            result.append(Constants.EVERY_LAYER_BLACK_STRING);
+        }
+        result.append("M ").append(freeCapacity).append(" ").append(capacity).append("\n");
+        for (BagOperate bagOperate : bagOperates) {
+            result.append(bagOperate.statisticalForm(layer + 1));
+        }
+        return result.toString();
     }
 }

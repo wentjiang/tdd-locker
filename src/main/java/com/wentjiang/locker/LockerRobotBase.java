@@ -35,6 +35,17 @@ public abstract class LockerRobotBase implements BagOperate {
 
     @Override
     public int getFreeCapacity() {
-        throw new NotImplementedException();
+        return bagOperates.stream().mapToInt(BagOperate::getFreeCapacity).sum();
+    }
+
+    @Override
+    public int getCapacity() {
+        return bagOperates.stream().mapToInt(BagOperate::getCapacity).sum();
+    }
+
+    @Override
+    public String statisticalForm(int layer) {
+
+        return null;
     }
 }

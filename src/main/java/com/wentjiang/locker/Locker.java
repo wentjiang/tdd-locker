@@ -51,4 +51,21 @@ public class Locker implements BagOperate {
     public int getFreeCapacity() {
         return capacity - ticketMap.size();
     }
+
+    @Override
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public String statisticalForm(int layer) {
+        StringBuilder result = new StringBuilder();
+        int freeCapacity = getFreeCapacity();
+        int capacity = getCapacity();
+        for (int i = 0; i < layer; i++) {
+            result.append(Constants.EVERY_LAYER_BLACK_STRING);
+        }
+        result.append("L ").append(freeCapacity).append(" ").append(capacity).append("\n");
+        return result.toString();
+    }
 }
