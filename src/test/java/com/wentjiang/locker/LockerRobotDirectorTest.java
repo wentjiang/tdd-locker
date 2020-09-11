@@ -19,8 +19,20 @@ public class LockerRobotDirectorTest {
         LockerRobotManager manager = new LockerRobotManager(lockers, Collections.emptyList());
         LockerRobotDirector director = new LockerRobotDirector(Collections.singletonList(manager));
         String result = director.statisticalForm();
-        Assertions.assertEquals(exceptedResult,result);
+        Assertions.assertEquals(exceptedResult, result);
     }
 
+    @Test
+    public void should_output_right_result_when_statistical_form_given_director_manage_1_manager_and_1_locker() {
+        String exceptedResult = "M 6 20\n" +
+                "  L 2 10\n" +
+                "  R 4 10\n" +
+                "    L 4 10\n";
+        LockerRobotDirector director = new LockerRobotDirector(
+                Collections.singletonList(new LockerRobotManager(Collections.singletonList(LockerUtil.getStoredLocker(10 - 2, 10)),
+                        Collections.singletonList(new PrimaryLockerRobot(Collections.singletonList(LockerUtil.getStoredLocker(10 - 4, 10)))))));
+        String result = director.statisticalForm();
+        Assertions.assertEquals(exceptedResult, result);
+    }
 
 }

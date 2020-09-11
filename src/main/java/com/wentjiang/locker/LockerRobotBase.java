@@ -1,7 +1,6 @@
 package com.wentjiang.locker;
 
 import com.wentjiang.locker.exception.BadTicketException;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,16 @@ public abstract class LockerRobotBase implements BagOperate {
 
     @Override
     public String statisticalForm(int layer) {
-
-        return null;
+        int freeCapacity = getFreeCapacity();
+        int capacity = getCapacity();
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < layer; i++) {
+            result.append(Constants.EVERY_LAYER_BLACK_STRING);
+        }
+        result.append("R ").append(freeCapacity).append(" ").append(capacity).append("\n");
+        for (BagOperate bagOperate : bagOperates) {
+            result.append(bagOperate.statisticalForm(layer + 1));
+        }
+        return result.toString();
     }
 }
