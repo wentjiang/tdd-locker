@@ -128,10 +128,17 @@ M 12 40
     L 4 10
     L 4 10
 ```
-- given director只管理2个locker,可用容量和容量分别为2,10 和 4,10 存在一个不被director管理的locker,容量和可用容量为3,10 存在一个不被director管理的
+- given director管理一个manager,这个manager管理2个locker,可用容量和容量分别为2,10 和 4,10 存在一个不被director管理的locker,容量和可用容量为3,10 存在一个不被director管理的
  robot,robot管理了一个locker,可用容量和容量为5,10 when 统计报表 then 报表内容为
 ```
 M 6 20
   L 2 10
   L 4 10
 ```  
+- given director管理两个manager,两个manager都管理一个可用容量和容量为2,10的locker when 统计报表 then 报表内容为
+```
+M 2 10
+  L 2 10
+M 2 10
+  L 2 10
+```

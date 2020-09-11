@@ -79,4 +79,23 @@ public class LockerRobotDirectorTest {
         String result = director.statisticalForm();
         Assertions.assertEquals(exceptedResult, result);
     }
+
+    @Test
+    public void should() {
+        String exceptedResult =
+                "" +
+                        "M 2 10\n" +
+                        "  L 2 10\n" +
+                        "M 2 10\n" +
+                        "  L 2 10\n";
+        LockerRobotManager manager1 = new LockerRobotManager(
+                Collections.singletonList(LockerUtil.getStoredLocker(10-2,10)),
+                Collections.emptyList());
+        LockerRobotManager manager2 = new LockerRobotManager(
+                Collections.singletonList(LockerUtil.getStoredLocker(10-2,10)),
+                Collections.emptyList());
+        LockerRobotDirector director = new LockerRobotDirector(Arrays.asList(manager1,manager2));
+        String result = director.statisticalForm();
+        Assertions.assertEquals(exceptedResult, result);
+    }
 }
